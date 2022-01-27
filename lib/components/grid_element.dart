@@ -1,8 +1,9 @@
-import 'package:fl_puzz/components/target_box.dart';
-import 'package:fl_puzz/components/dragable_card.dart';
-import 'package:fl_puzz/providers/element_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'target_box.dart';
+import 'dragable_card.dart';
+import '../providers/element_provider.dart';
 
 class GridElement extends StatelessWidget {
   final int x;
@@ -23,6 +24,7 @@ class GridElement extends StatelessWidget {
         }
         return Draggable<List<int>>(
           child: DragableCard(i: val),
+          rootOverlay: true,
           childWhenDragging: const Card(
             color: Colors.white,
             child: Center(
@@ -36,13 +38,14 @@ class GridElement extends StatelessWidget {
           feedback: Card(
             color: _getColor(eP.board[x][y]),
             child: Padding(
-              padding: const EdgeInsets.all(30),
+              padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width < 700 ? 5 : 30),
               child: SizedBox(
                 height: MediaQuery.of(context).size.width < 700
-                    ? MediaQuery.of(context).size.width / 30
+                    ? MediaQuery.of(context).size.width / 5.6
                     : MediaQuery.of(context).size.width / 25,
                 width: MediaQuery.of(context).size.width < 700
-                    ? MediaQuery.of(context).size.width / 30
+                    ? MediaQuery.of(context).size.width / 5.6
                     : MediaQuery.of(context).size.width / 25,
                 child: Center(
                   child: Text(

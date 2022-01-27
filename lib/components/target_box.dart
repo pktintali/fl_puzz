@@ -14,6 +14,7 @@ class TargetBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DragTarget<List<int>>(
+      
       onAccept: (data) {
         print(data);
         print("$x, $y");
@@ -40,7 +41,7 @@ class TargetBox extends StatelessWidget {
           );
         }
         return const Card(
-          color: Colors.deepPurpleAccent,
+          color: Colors.grey,
           child: Center(
             child: SizedBox(
               height: 60,
