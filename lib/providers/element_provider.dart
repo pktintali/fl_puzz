@@ -3,10 +3,10 @@ import 'dart:math';
 
 class ElementProvider extends ChangeNotifier {
   List<List<int>> board = [
-    [6, 14, 4, 9],
-    [1, 5, 8, 10],
-    [3, 0, 7, 11],
-    [12, 15, 2, 16]
+    [1, 1, 1, 1],
+    [2, 2, 2, 2],
+    [3, 3, 0, 3],
+    [4, 4, 4, 4],
   ];
   bool _completed = false;
   int steps = 0;
@@ -66,17 +66,25 @@ class ElementProvider extends ChangeNotifier {
   void refreshGame() {
     List<int> e = [];
     while (e.length < 16) {
-      int r = Random().nextInt(16);
-      if (!e.contains(r)) {
-        e.add(r);
+      int t = Random().nextInt(5);
+      if (t == 0) {
+        e.add(t);
+        continue;
       }
+      if (e.contains(t)) {
+        continue;
+      }
+      e.addAll([t, t, t, t]);
     }
-    
+    if(!e.contains(0)){
+      e[Random().nextInt(16)] = 0;
+    }
+
     board = [
-      [e[0], e[1], e[2], e[3]],
-      [e[4], e[5], e[6], e[7]],
-      [e[8], e[9], e[10], e[11]],
-      [e[12], e[13], e[14], e[15]],
+      [e[0], e[4], e[7], e[9]],
+      [e[8], e[1], e[5], e[6]],
+      [e[3], e[10], e[13], e[12]],
+      [e[11], e[14], e[15], e[2]],
     ];
     _completed = false;
     steps = 0;

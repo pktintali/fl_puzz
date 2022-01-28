@@ -25,11 +25,11 @@ class DragableCard extends StatelessWidget {
   Color _getColor(i) {
     if (i == 0) return Colors.white;
 
-    if (i <= 4) return Colors.red;
+    if (i <= 1) return Colors.red;
 
-    if (i <= 8) return Colors.blue;
+    if (i <= 2) return Colors.blue;
 
-    if (i <= 12) return Colors.brown;
+    if (i <= 3) return Colors.brown;
 
     return Colors.green;
   }
