@@ -1,3 +1,4 @@
+import 'package:fl_puzz/components/custom_box.dart';
 import 'package:fl_puzz/providers/element_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,6 @@ class TargetBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DragTarget<List<int>>(
-      
       onAccept: (data) {
         print(data);
         print("$x, $y");
@@ -31,23 +31,14 @@ class TargetBox extends StatelessWidget {
       builder: (context, candidateData, rejectedData) {
         if (candidateData.isEmpty) {
           return const Card(
-            color: Colors.white,
-            child: Center(
-              child: SizedBox(
-                height: 60,
-                width: 60,
-              ),
-            ),
+            color: Color(0xFF012345),
+            shadowColor: Colors.white,
+            child: CustomBox(),
           );
         }
         return const Card(
           color: Colors.grey,
-          child: Center(
-            child: SizedBox(
-              height: 60,
-              width: 60,
-            ),
-          ),
+          child: CustomBox(),
         );
       },
     );

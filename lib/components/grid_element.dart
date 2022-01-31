@@ -1,3 +1,4 @@
+import 'package:fl_puzz/components/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,44 +21,27 @@ class GridElement extends StatelessWidget {
       builder: (c, eP, child) {
         int val = eP.board[x][y];
         if (val == 0) {
-          return TargetBox(x: x, y: y);
+          return AnimatedPadding(
+            duration: const Duration(milliseconds: 300),
+            padding: EdgeInsets.all(eP.padding),
+            child: TargetBox(x: x, y: y),
+          );
         }
-        return Draggable<List<int>>(
-          child: DragableCard(i: val),
-          rootOverlay: true,
-          childWhenDragging: const Card(
-            color: Colors.white,
-            child: Center(
-              child: SizedBox(
-                height: 60,
-                width: 60,
-              ),
-            ),
-          ),
-          data: [x, y],
-          feedback: Card(
-            color: _getColor(eP.board[x][y]),
-            child: Padding(
-              padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width < 700 ? 5 : 30),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.width < 700
-                    ? MediaQuery.of(context).size.width / 5.6
-                    : MediaQuery.of(context).size.width / 25,
-                width: MediaQuery.of(context).size.width < 700
-                    ? MediaQuery.of(context).size.width / 5.6
-                    : MediaQuery.of(context).size.width / 25,
-                child: Center(
-                  child: Text(
-                    '$val',
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+        return AnimatedPadding(
+          duration: const Duration(milliseconds: 300),
+          padding: EdgeInsets.all(eP.padding),
+          child: Draggable<List<int>>(
+            child: DragableCard(i: val),
+            rootOverlay: true,
+            childWhenDragging: const Card(
+                color: Color(0xFF012345),
+                shadowColor: Colors.white,
+                child: CustomBox()),
+            data: [x, y],
+            feedback: Card(
+              shadowColor: Colors.white,
+              color: _getColor(eP.board[x][y]),
+              child: const CustomBox(),
             ),
           ),
         );
@@ -66,14 +50,21 @@ class GridElement extends StatelessWidget {
   }
 
   Color _getColor(i) {
-    if (i == 0) return Colors.white;
-
-    if (i <= 4) return Colors.red;
-
-    if (i <= 8) return Colors.blue;
-
-    if (i <= 12) return Colors.brown;
-
-    return Colors.green;
+    switch (i) {
+      case 0:
+        return const Color(0xFF012345);
+      case 1:
+        return Colors.green;
+      case 2:
+        return Colors.deepOrange;
+      case 3:
+        return Colors.yellow;
+      case 4:
+        return Colors.white;
+      case 5:
+        return Colors.lightBlueAccent;
+      default:
+        return Colors.brown.shade300;
+    }
   }
 }

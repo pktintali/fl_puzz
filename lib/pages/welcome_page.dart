@@ -7,7 +7,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent.shade700,
+      backgroundColor: const Color(0xFF012345),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -33,22 +33,7 @@ class WelcomePage extends StatelessWidget {
               );
             },
             style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-                side: const BorderSide(color: Colors.white),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text('Settings'),
-            ),
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.deepPurpleAccent.shade700,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
                 side: const BorderSide(color: Colors.white),

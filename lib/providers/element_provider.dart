@@ -2,16 +2,74 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class ElementProvider extends ChangeNotifier {
-  List<List<int>> board = [
-    [1, 1, 1, 1],
-    [2, 2, 2, 2],
-    [3, 3, 0, 3],
-    [4, 4, 4, 4],
-  ];
+  late List<List<int>> board = generateBoard(n: 4);
   bool _completed = false;
   int steps = 0;
+  int size = 4;
+  double padding = 0;
+  double rotation = 0;
+
+  List<int> getSizedList() {
+    List<int> temp = [];
+    temp.addAll(List.generate(size, (i) => i));
+    return temp;
+  }
 
   bool get isCompleted => _completed;
+
+  void setSize(int n) {
+    size = n;
+    board = generateBoard(n: n);
+    notifyListeners();
+  }
+
+  void setPadding(double p) {
+    padding = p;
+    notifyListeners();
+  }
+
+  void resetPadding() {
+    padding = 0;
+    notifyListeners();
+  }
+
+  void setRotation(double r) {
+    rotation = r;
+    notifyListeners();
+  }
+
+  void resetRotation() {
+    rotation = 0;
+    notifyListeners();
+  }
+
+  List<List<int>> generateBoard({int n = 4}) {
+    size = n;
+    List<List<int>> e = [];
+    List<int> used = [];
+    for (int i = 0; i < n; i++) {
+      e.add([]);
+      int r = Random().nextInt(n) + 1;
+      while (used.contains(r)) {
+        r = Random().nextInt(n) + 1;
+      }
+      used.add(r);
+      for (int j = 0; j < n; j++) {
+        e[i].add(r);
+      }
+    }
+    e[Random().nextInt(n)][Random().nextInt(n)] = 0;
+    for (int i = 0; i < n * n; i++) {
+      int r1 = Random().nextInt(n);
+      int r2 = Random().nextInt(n);
+      if (r1 != r2) {
+        int temp = e[r1][r2];
+        e[r1][r2] = e[r2][r1];
+        e[r2][r1] = temp;
+      }
+    }
+    return e;
+  }
 
   bool canMove({
     required int x1,
@@ -43,49 +101,50 @@ class ElementProvider extends ChangeNotifier {
 
   void checkCompletion() {
     print(steps);
-    if (board[0][0] == 1 &&
-        board[0][1] == 2 &&
-        board[0][2] == 3 &&
-        board[0][3] == 4 &&
-        board[1][0] == 5 &&
-        board[1][1] == 6 &&
-        board[1][2] == 7 &&
-        board[1][3] == 8 &&
-        board[2][0] == 9 &&
-        board[2][1] == 10 &&
-        board[2][2] == 11 &&
-        board[2][3] == 12 &&
-        board[3][0] == 13 &&
-        board[3][1] == 14 &&
-        board[3][2] == 15) {
-      _completed = true;
+    bool t1 = false, t2 = true, t3 = true;
+    if (board[0][size - 1] == 0 ||
+        board[size - 1][size - 1] == 0 ||
+        board[0][0] == 0 ||
+        board[size - 1][0] == 0) {
+      t1 = true;
     }
+    for (int i = 0; i < size; i++) {
+      bool temp = true;
+      for (int j = 0; j < size - 1; j++) {
+        if (board[i][j] != 0 &&
+            board[i][j + 1] != 0 &&
+            (board[i][j] != board[i][j + 1])) {
+          temp = false;
+          break;
+        }
+      }
+      if (temp == false) {
+        t2 = false;
+        break;
+      }
+    }
+    for (int i = 0; i < size; i++) {
+      bool temp = true;
+      for (int j = 0; j < size - 1; j++) {
+        if (board[j][i] != 0 &&
+            board[j + 1][i] != 0 &&
+            (board[j][i] != board[j + 1][i])) {
+          temp = false;
+          break;
+        }
+      }
+      if (temp == false) {
+        t3 = false;
+        break;
+      }
+    }
+
+    _completed = t1 && (t2 || t3);
     notifyListeners();
   }
 
-  void refreshGame() {
-    List<int> e = [];
-    while (e.length < 16) {
-      int t = Random().nextInt(5);
-      if (t == 0) {
-        e.add(t);
-        continue;
-      }
-      if (e.contains(t)) {
-        continue;
-      }
-      e.addAll([t, t, t, t]);
-    }
-    if(!e.contains(0)){
-      e[Random().nextInt(16)] = 0;
-    }
-
-    board = [
-      [e[0], e[4], e[7], e[9]],
-      [e[8], e[1], e[5], e[6]],
-      [e[3], e[10], e[13], e[12]],
-      [e[11], e[14], e[15], e[2]],
-    ];
+  void refreshGame(int n) {
+    board = generateBoard(n: n);
     _completed = false;
     steps = 0;
     notifyListeners();

@@ -1,3 +1,4 @@
+import 'package:fl_puzz/components/custom_box.dart';
 import 'package:flutter/material.dart';
 
 class DragableCard extends StatelessWidget {
@@ -7,30 +8,28 @@ class DragableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
+      shadowColor: Colors.white,
       color: _getColor(i),
-      child: Center(
-        child: Text(
-          '$i',
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
+      child: const CustomBox(),
     );
   }
 
   Color _getColor(i) {
-    if (i == 0) return Colors.white;
-
-    if (i <= 1) return Colors.red;
-
-    if (i <= 2) return Colors.blue;
-
-    if (i <= 3) return Colors.brown;
-
-    return Colors.green;
+    switch (i) {
+      case 0:
+        return const Color(0xFF012345);
+      case 1:
+        return Colors.green;
+      case 2:
+        return Colors.deepOrange;
+      case 3:
+        return Colors.yellow;
+      case 4:
+        return Colors.white;
+      case 5:
+        return Colors.lightBlueAccent;
+      default:
+        return Colors.brown.shade300;
+    }
   }
 }
