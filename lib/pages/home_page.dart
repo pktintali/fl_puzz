@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ElementProvider>(builder: (c, eP, _) {
       return Scaffold(
+        backgroundColor: const Color(0xFF012345),
         floatingActionButton: DropdownButton<int>(
           hint: const Text('Size'),
           iconEnabledColor: Colors.white,
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
             });
           },
         ),
-        backgroundColor: const Color(0xFF012345),
+        // backgroundColor: const Color(0xFF012345),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -93,7 +94,8 @@ class HomePage extends StatelessWidget {
                     }
                     eP.setRotation(5);
                     eP.refreshGame(eP.size);
-                    await Future.delayed(const Duration(milliseconds: 400), () {
+                    await Future.delayed(const Duration(milliseconds: 400),
+                        () {
                       eP.resetPadding();
                       eP.resetRotation();
                     });

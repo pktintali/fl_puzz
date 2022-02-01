@@ -100,7 +100,6 @@ class ElementProvider extends ChangeNotifier {
   }
 
   void checkCompletion() {
-    print(steps);
     bool t1 = false, t2 = true, t3 = true;
     if (board[0][size - 1] == 0 ||
         board[size - 1][size - 1] == 0 ||
