@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class ElementProvider extends ChangeNotifier {
+class GameProvider extends ChangeNotifier {
   late List<List<int>> board = generateBoard(n: 4);
   bool _completed = false;
   int steps = 0;

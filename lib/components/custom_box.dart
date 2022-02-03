@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/game_provider.dart';
 import '../utils.dart';
 
 class CustomBox extends StatelessWidget {
@@ -7,9 +9,17 @@ class CustomBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: Utils.isMobile(context) ? 50 : 100,
-      width: Utils.isMobile(context) ? 50 : 100,
+    return Consumer<GameProvider>(
+      builder: (c, eP, _) {
+        return SizedBox(
+          height: Utils.isMobile(context)
+              ? Utils.getMobileBoxSize(eP.size)
+              : Utils.getBoxSize(eP.size),
+          width: Utils.isMobile(context)
+              ? Utils.getMobileBoxSize(eP.size)
+              : Utils.getBoxSize(eP.size),
+        );
+      },
     );
   }
 }
